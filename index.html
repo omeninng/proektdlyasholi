@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мир Собак - Все о наших четвероногих друзьях</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: #4b2e83;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #e8e3d3;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #e8e3d3;
+        }
+    
+        .main-content {
+            width: 90%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            color: #4b2e83;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #4b2e83;
+            margin: 1.5rem 0 1rem;
+            border-bottom: 2px solid #e8e3d3;
+            padding-bottom: 0.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        .dog-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .dog-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .dog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .dog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .dog-card h3 {
+            padding: 0.8rem;
+            background-color: #f5f5f5;
+            color: #4b2e83;
+        }
+        
+        .dog-card p {
+            padding: 0 0.8rem 0.8rem;
+            font-size: 0.9rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            animation: modalopen 0.5s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            color: #aaa;
+
+font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #333;
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e8e3d3;
+            padding-bottom: 1rem;
+        }
+        
+        .modal-header img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 1.5rem;
+        }
+        
+        .modal-header h2 {
+            color: #4b2e83;
+            margin: 0;
+            border: none;
+            padding: 0;
+        }
+        
+        .modal-body {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        .dog-info {
+            margin-bottom: 1rem;
+        }
+        
+        .dog-info h3 {
+            color: #4b2e83;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .dog-info p {
+            margin-bottom: 0.5rem;
+        }
+        
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: #e8e3d3;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .contact-info p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-info i {
+            margin-right: 0.5rem;
+            color: #e8e3d3;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #e8e3d3;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #555;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+ 
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .modal-content {
+                width: 90%;
+                margin: 10% auto;
+            }
+            
+            .modal-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .modal-header img {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">Мир <span>Собак</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">Породы</a></li>
+
+
+<li><a href="#">Уход</a></li>
+                    <li><a href="#">Дрессировка</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+
+    <div class="main-content">
+        <h1>Добро пожаловать в мир собак!</h1>
+        <p>Собаки - наши верные друзья и компаньоны на протяжении тысяч лет. На этом сайте вы найдете всю информацию о различных породах собак, особенностях их содержания, дрессировки и многое другое.</p>
+        
+        <h2>Популярные породы</h2>
+        <div class="dog-gallery">
+            <div class="dog-card" onclick="openModal('labrador')">
+                <img src="https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2018/07/10/15312196999604.jpg" alt="Лабрадор">
+                <h3>Лабрадор-ретривер</h3>
+                <p>Дружелюбная, энергичная порода, отличный компаньон для семьи.</p>
+            </div>
+            
+            <div class="dog-card" onclick="openModal('german-shepherd')">
+                <img src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Немецкая овчарка">
+                <h3>Немецкая овчарка</h3>
+                <p>Умная, преданная порода, часто используется в полиции и армии.</p>
+            </div>
+            
+            <div class="dog-card" onclick="openModal('beagle')">
+                <img src="https://i.pinimg.com/originals/9c/3a/16/9c3a161254af0369c2a32bae240da2ff.jpg" alt="Бигль">
+                <h3>Бигль</h3>
+                <p>Веселая, любознательная порода с отличным нюхом.</p>
+            </div>
+            
+            <div class="dog-card" onclick="openModal('golden-retriever')">
+                <img src="https://images.unsplash.com/photo-1517423738875-5ce310acd3da?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Золотистый ретривер">
+                <h3>Золотистый ретривер</h3>
+                <p>Добродушная, терпеливая порода, идеальная для семей с детьми.</p>
+            </div>
+        </div>
+        
+        <h2>Советы по уходу</h2>
+        <p>Правильный уход за собакой включает в себя:</p>
+        <ul>
+            <li>Регулярные прогулки и физические нагрузки</li>
+            <li>Сбалансированное питание</li>
+            <li>Гигиенические процедуры (купание, стрижка когтей, чистка ушей)</li>
+            <li>Ветеринарный уход (вакцинация, профилактика паразитов)</li>
+            <li>Дрессировка и социализация</li>
+        </ul>
+    </div>
+    
+
+    <div id="labrador-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('labrador-modal')">&times;</span>
+            <div class="modal-header">
+                <img src="https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Лабрадор">
+                <h2>Лабрадор-ретривер</h2>
+            </div>
+            <div class="modal-body">
+                <div class="dog-info">
+                    <h3>Основная информация</h3>
+                    <p><strong>Рост:</strong> 54-57 см (кобели), 52-55 см (суки)</p>
+                    <p><strong>Вес:</strong> 27-40 кг</p>
+                    <p><strong>Продолжительность жизни:</strong> 10-14 лет</p>
+                    <p><strong>Характер:</strong> Дружелюбный, общительный, энергичный, умный, преданный</p>
+                    <p><strong>Особенности:</strong> Отличный компаньон для семьи, любит воду, легко обучается</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="german-shepherd-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('german-shepherd-modal')">&times;</span>
+            <div class="modal-header">
+                <img src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Немецкая овчарка">
+
+
+<h2>Немецкая овчарка</h2>
+            </div>
+            <div class="modal-body">
+                <div class="dog-info">
+                    <h3>Основная информация</h3>
+                    <p><strong>Рост:</strong> 60-65 см (кобели), 55-60 см (суки)</p>
+                    <p><strong>Вес:</strong> 30-40 кг (кобели), 22-32 кг (суки)</p>
+                    <p><strong>Продолжительность жизни:</strong> 9-13 лет</p>
+                    <p><strong>Характер:</strong> Умная, смелая, уверенная в себе, преданная</p>
+                    <p><strong>Особенности:</strong> Используется в полиции и армии, отличный защитник</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="beagle-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('beagle-modal')">&times;</span>
+            <div class="modal-header">
+                <img src="https://i.pinimg.com/originals/9c/3a/16/9c3a161254af0369c2a32bae240da2ff.jpg" alt="Бигль">
+                <h2>Бигль</h2>
+            </div>
+            <div class="modal-body">
+                <div class="dog-info">
+                    <h3>Основная информация</h3>
+                    <p><strong>Рост:</strong> 33-40 см</p>
+                    <p><strong>Вес:</strong> 9-11 кг</p>
+                    <p><strong>Продолжительность жизни:</strong> 12-15 лет</p>
+                    <p><strong>Характер:</strong> Дружелюбный, любознательный, веселый, энергичный</p>
+                    <p><strong>Особенности:</strong> Отличный нюх, используется для охоты, любит лаять</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="golden-retriever-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('golden-retriever-modal')">&times;</span>
+            <div class="modal-header">
+                <img src="https://images.unsplash.com/photo-1517423738875-5ce310acd3da?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Золотистый ретривер">
+                <h2>Золотистый ретривер</h2>
+            </div>
+            <div class="modal-body">
+                <div class="dog-info">
+                    <h3>Основная информация</h3>
+                    <p><strong>Рост:</strong> 56-61 см (кобели), 51-56 см (суки)</p>
+                    <p><strong>Вес:</strong> 29-34 кг (кобели), 25-29 кг (суки)</p>
+                    <p><strong>Продолжительность жизни:</strong> 10-12 лет</p>
+                    <p><strong>Характер:</strong> Добродушный, терпеливый, умный, преданный</p>
+                    <p><strong>Особенности:</strong> Идеальная семейная собака, отлично ладит с детьми</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+ 
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>О нас</h3>
+                <p>Мир Собак - это информационный ресурс для всех любителей собак. Мы предоставляем достоверную информацию о породах, уходе и воспитании собак.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Быстрые ссылки</h3>
+                <ul>
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">Породы собак</a></li>
+                    <li><a href="#">Питание</a></li>
+                    <li><a href="#">Здоровье</a></li>
+                    <li><a href="#">Дрессировка</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Контакты</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> г. Ульяновск, ул. Собачья</p>
+                    <p><i class="fas fa-phone"></i> +7 (123) 121-12-12</p>
+                    <p><i class="fas fa-envelope"></i> info@mir-sobak.ru</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+
+
+<a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Все права защищены</p>
+        </div>
+    </footer>
+
+    <script>
+     
+        function openModal(modalId) {
+            document.getElementById(modalId + '-modal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; 
+        }
+        
+       
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto'; 
+        }
+        
+      
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>
